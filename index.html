@@ -13,6 +13,7 @@
         <div class="div1">
             <img id="tap" src="./photo_5255942954508476260_y.jpg" />
         </div>
+        <p id="score">Очки: 5000</p>
         <div class="div2">
             <button class='upG' id="open-modal">Upgrate</button>
         </div>
@@ -22,7 +23,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Upgrate</h2>
-            <p>200 очков = Х2</p>
+            <p id="numK">Цена: 200</p>
             <button id="upgrade-button">Апнуть</button>
         </div>
     </div>
@@ -71,17 +72,59 @@
             } else {
                 alert("Губа не дура, а за какие Ши-Ши?");
             }
-        });
-
-
-        document.getElementById('numP').addEventListener('click', function() {
-            const audioElement = new Audio('./737637.mp3'); // Створюємо новий аудіо об'єкт
-            audioElement.play().catch(error => {
-                console.error("Помилка при відтворенні звуку:", error);
-            });
-        });
+        })
 
     </script>
+
+
+<audio id="audio" src="./16fe8ac99665d1c.mp3"></audio>
+
+<script>
+    const playButton = document.getElementById('tap');
+    const audio = document.getElementById('audio');
+
+    playButton.addEventListener('click', () => {
+        // Скидаємо час відтворення на початок перед програванням
+        audio.currentTime = 0;
+        audio.play();
+    });
+</script>
+
+<audio id="myAudio" src="./7376379788962843425 (mp3cut.net).mp3"></audio>
+
+    <script>
+        document.getElementById('tap').addEventListener('click', function() {
+            const chance = Math.random(); // Генеруємо випадкове число від 0 до 1
+            if (chance < 0.05) { // 20% шанс
+                document.getElementById('myAudio').play();
+            }
+        });
+    </script>
+
+<script>
+    let score = 5000;
+    const maxScore = 5000;
+    const scoreElement = document.getElementById('score');
+
+    document.getElementById('tap').addEventListener('click', () => {
+        if (score > 0) {
+            score--;
+            updateScore();
+        }
+    });
+
+    setInterval(() => {
+        if (score < maxScore) {
+            score++;
+            updateScore();
+        }
+    }, 1000);
+
+    function updateScore() {
+        scoreElement.textContent = `Очки: ${score}`;
+    }
+</script>
+
 
     <footer>
         <p>Автор - @fikys_is</p>

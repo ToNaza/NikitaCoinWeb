@@ -134,7 +134,20 @@ img{
     margin: 15% auto; /* Центрування */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Ширина модального вікна */
+    width: 35%; /* Ширина модального вікна */
+    margin-top: 200px;
+    text-align: center;
+
+    p{
+        margin: 10px;
+    }
+
+    button{
+        background-color: #888;
+        width: 200px;
+        height: 25px;
+        border-radius: 10px;
+    }
 }
 
 .close {
@@ -149,4 +162,8 @@ img{
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+#score{
+    margin-left: 10px;
 }
