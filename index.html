@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NikitaCoinWeb</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+    <div class="content">
+        <p class="p1" id="numP">0</p>
+        <p class="p1">NikitaCoins</p>
+        <div class="div1">
+            <img id="tap" src="./photo_5255942954508476260_y.jpg" />
+        </div>
+        <div class="div2">
+            <button class='upG' id="open-modal">Upgrate</button>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Upgrate</h2>
+            <p>200 очков = Х2</p>
+            <button id="upgrade-button">Апнуть</button>
+        </div>
+    </div>
+
+    <script>
+        let upgradeCost = 200; // Начальная стоимость прокачки
+        let upgradeMultiplier = 1; // Начальный множитель для добавления к numP
+
+        document.getElementById("tap").addEventListener("click", function() {
+            let numElement = document.getElementById("numP");
+            let currentValue = parseInt(numElement.textContent);
+            numElement.textContent = currentValue + upgradeMultiplier; // Добавляем текущее значение множителя
+
+            numElement.classList.add("jump");
+            numElement.addEventListener("animationend", function() {
+                numElement.classList.remove("jump");
+            }, { once: true });
+        });
+
+        const modal = document.getElementById('modal');
+        const btn = document.getElementById('open-modal');
+        const span = document.getElementsByClassName('close')[0];
+
+        btn.onclick = function() {
+            modal.style.display = 'block';
+        }
+
+        span.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Добавление обработчика для кнопки прокачки
+        document.getElementById("upgrade-button").addEventListener("click", function() {
+            let numElement = document.getElementById("numP");
+            let currentValue = parseInt(numElement.textContent);
+            
+            if (currentValue >= upgradeCost) {
+                numElement.textContent = currentValue - upgradeCost; // Уменьшаем баллы на 200, но не добавляем к текущему значению
+                upgradeMultiplier++; // Увеличиваем множитель на 1
+            } else {
+                alert("Губа не дура, а за какие Ши-Ши?");
+            }
+        });
+
+
+        document.getElementById('numP').addEventListener('click', function() {
+            const audioElement = new Audio('./737637.mp3'); // Створюємо новий аудіо об'єкт
+            audioElement.play().catch(error => {
+                console.error("Помилка при відтворенні звуку:", error);
+            });
+        });
+
+    </script>
+
+    <footer>
+        <p>Автор - @fikys_is</p>
+    </footer>
+</body>
+</html>
