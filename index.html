@@ -13,7 +13,7 @@
         <div class="div1">
             <img id="tap" src="./photo_5255942954508476260_y.jpg" />
         </div>
-        <p id="score">Очки: 5000</p>
+        <p id="score">Очки: 5000 / 5000</p>
         <div class="div2">
             <button class='upG' id="open-modal">Upgrate</button>
         </div>
@@ -24,23 +24,89 @@
             <span class="close">&times;</span>
             <h2>Upgrate</h2>
             <p id="numK">Цена: 200</p>
-            <button id="upgrade-button">Апнуть</button>
+            <button id="upgrade-button">Апнуть силу кликов</button>
+            <p id="numK">Цена: 400</p>
+            <button id="upgrade-button-2">Апнуть кол. кликов</button>
+            <p id="numK">Цена: 500</p>
+            <button id="upgrade-speed-button">Апнуть скорость. обновления</button>
         </div>
     </div>
 
     <script>
-        let upgradeCost = 200; // Начальная стоимость прокачки
-        let upgradeMultiplier = 1; // Начальный множитель для добавления к numP
+        let upgradeCost = 200;
+        let upgradeMultiplier = 1;
+        let maxScore = 5000;
+        let score = maxScore;
+        let scoreIncrement = 1000;
+        let updateInterval = 1000; // Начальная скорость обновления - 1 секунда
+        const scoreElement = document.getElementById('score');
+        let intervalId;
+
+        function updateScore() {
+            scoreElement.textContent = `Очки: ${score} / ${maxScore}`;
+        }
+
+        function startScoreUpdate() {
+            clearInterval(intervalId);
+            intervalId = setInterval(() => {
+                if (score < maxScore) {
+                    score++;
+                    updateScore();
+                }
+            }, updateInterval);
+        }
+
+        startScoreUpdate();
 
         document.getElementById("tap").addEventListener("click", function() {
             let numElement = document.getElementById("numP");
             let currentValue = parseInt(numElement.textContent);
-            numElement.textContent = currentValue + upgradeMultiplier; // Добавляем текущее значение множителя
+            numElement.textContent = currentValue + upgradeMultiplier;
 
             numElement.classList.add("jump");
             numElement.addEventListener("animationend", function() {
                 numElement.classList.remove("jump");
             }, { once: true });
+        });
+
+        document.getElementById("upgrade-button").addEventListener("click", function() {
+            let numElement = document.getElementById("numP");
+            let currentValue = parseInt(numElement.textContent);
+
+            if (currentValue >= upgradeCost) {
+                numElement.textContent = currentValue - upgradeCost;
+                upgradeMultiplier++;
+            } else {
+                alert("Губа не дура, а за какие Ши-Ши?");
+            }
+        });
+
+        document.getElementById("upgrade-button-2").addEventListener("click", function() {
+            let numElement = document.getElementById("numP");
+            let currentValue = parseInt(numElement.textContent);
+            let upgradeCost = 400;
+
+            if (currentValue >= upgradeCost) {
+                numElement.textContent = currentValue - upgradeCost;
+                maxScore += scoreIncrement;
+                updateScore();
+            } else {
+                alert("Без труда, не выловишь и рыбки из пруда.");
+            }
+        });
+
+        document.getElementById("upgrade-speed-button").addEventListener("click", function() {
+            let numElement = document.getElementById("numP");
+            let currentValue = parseInt(numElement.textContent);
+            let speedUpgradeCost = 500;
+
+            if (currentValue >= speedUpgradeCost) {
+                numElement.textContent = currentValue - speedUpgradeCost;
+                updateInterval = Math.max(200, updateInterval * 0.8); // Уменьшаем интервал, минимально до 200 мс
+                startScoreUpdate(); // Перезапускаем с новым интервалом
+            } else {
+                alert("Недостаточно средств для улучшения скорости обновления!");
+            }
         });
 
         const modal = document.getElementById('modal');
@@ -60,74 +126,10 @@
                 modal.style.display = 'none';
             }
         }
-
-        // Добавление обработчика для кнопки прокачки
-        document.getElementById("upgrade-button").addEventListener("click", function() {
-            let numElement = document.getElementById("numP");
-            let currentValue = parseInt(numElement.textContent);
-            
-            if (currentValue >= upgradeCost) {
-                numElement.textContent = currentValue - upgradeCost; // Уменьшаем баллы на 200, но не добавляем к текущему значению
-                upgradeMultiplier++; // Увеличиваем множитель на 1
-            } else {
-                alert("Губа не дура, а за какие Ши-Ши?");
-            }
-        })
-
     </script>
-
-
-<audio id="audio" src="./16fe8ac99665d1c.mp3"></audio>
-
-<script>
-    const playButton = document.getElementById('tap');
-    const audio = document.getElementById('audio');
-
-    playButton.addEventListener('click', () => {
-        // Скидаємо час відтворення на початок перед програванням
-        audio.currentTime = 0;
-        audio.play();
-    });
-</script>
-
-<audio id="myAudio" src="./7376379788962843425 (mp3cut.net).mp3"></audio>
-
-    <script>
-        document.getElementById('tap').addEventListener('click', function() {
-            const chance = Math.random(); // Генеруємо випадкове число від 0 до 1
-            if (chance < 0.05) { // 20% шанс
-                document.getElementById('myAudio').play();
-            }
-        });
-    </script>
-
-<script>
-    let score = 5000;
-    const maxScore = 5000;
-    const scoreElement = document.getElementById('score');
-
-    document.getElementById('tap').addEventListener('click', () => {
-        if (score > 0) {
-            score--;
-            updateScore();
-        }
-    });
-
-    setInterval(() => {
-        if (score < maxScore) {
-            score++;
-            updateScore();
-        }
-    }, 1000);
-
-    function updateScore() {
-        scoreElement.textContent = `Очки: ${score}`;
-    }
-</script>
-
 
     <footer>
-        <p>Автор - @fikys_is</p>
+        <p onclick="location.href='https://tonaza.github.io/Naza_Hub/'">Автор - @fikys_is (Клац, и ты уже в моей берлоге)</p>
     </footer>
 </body>
 </html>
