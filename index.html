@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NikitaCoinWeb</title>
     <link rel="stylesheet" href="style1.css">
+    <link rel="icon" href="./homik.jpg">
 </head>
 <body>
     <div class="content">
@@ -105,7 +106,7 @@
                 updateInterval = Math.max(200, updateInterval * 0.8); // Уменьшаем интервал, минимально до 200 мс
                 startScoreUpdate(); // Перезапускаем с новым интервалом
             } else {
-                alert("Недостаточно средств для улучшения скорости обновления!");
+                alert("Дай бомжу рыбу и он будит сыт 1 день, дай бомжу удочку и он её пропьёт");
             }
         });
 
@@ -128,8 +129,31 @@
         }
     </script>
 
+<script>
+    document.getElementById("tap").addEventListener("click", function() {
+        let numElement = document.getElementById("numP");
+        let currentValue = parseInt(numElement.textContent);
+        numElement.textContent = currentValue + upgradeMultiplier;
+
+        // Перевірка, чи numP знаходиться між 1000 і 1500 для зміни зображення
+        const tapImage = document.getElementById("tap");
+        if (currentValue >= 1000 && currentValue < 1500) {
+            tapImage.src = "./WDa.jpg"; // Замініть на шлях до вашого нового зображення
+        } else {
+            tapImage.src = "./photo_5255942954508476260_y.jpg"; // Оригінальне зображення
+        }
+
+        // Ефект анімації
+        numElement.classList.add("jump");
+        numElement.addEventListener("animationend", function() {
+            numElement.classList.remove("jump");
+        }, { once: true });
+    });
+</script>
+
+
     <footer>
-        <p onclick="location.href='https://tonaza.github.io/Naza_Hub/'">Автор - @fikys_is (Клац, и ты уже в моей берлоге)</p>
+        <p onclick="location.href='https://tonaza.github.io/Naza_Hub/'">Автор - @fikys_is (Клац, и ты в моей берлоге)</p>
     </footer>
 </body>
 </html>
