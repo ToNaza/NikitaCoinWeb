@@ -33,14 +33,17 @@
         </div>
     </div>
 
+    <audio id="click-sound" src="./16fe8ac99665d1c.mp3"></audio> <!-- Укажите путь к вашему звуковому файлу -->
+
     <script>
         let upgradeCost = 200;
         let upgradeMultiplier = 1;
         let maxScore = 5000;
         let score = maxScore;
         let scoreIncrement = 1000;
-        let updateInterval = 1000; // Начальная скорость обновления - 1 секунда
+        let updateInterval = 1000;
         const scoreElement = document.getElementById('score');
+        const clickSound = document.getElementById('click-sound');
         let intervalId;
 
         function updateScore() {
@@ -62,8 +65,30 @@
         document.getElementById("tap").addEventListener("click", function() {
             let numElement = document.getElementById("numP");
             let currentValue = parseInt(numElement.textContent);
-            numElement.textContent = currentValue + upgradeMultiplier;
 
+            // Увеличение значения NikitaCoins
+            currentValue += upgradeMultiplier;
+            numElement.textContent = currentValue;
+
+            // Уменьшение очков на 1 после клика
+            if (score > 0) {
+                score--;
+                updateScore();
+            }
+
+            // Воспроизведение звука
+            clickSound.currentTime = 0;
+            clickSound.play();
+
+            // Смена изображения при достижении 1000-1010 очков
+            const tapImage = document.getElementById("tap");
+            if (currentValue >= 1000 && currentValue < 1010) {
+                tapImage.src = "./WDa.jpg";
+            } else {
+                tapImage.src = "./photo_5255942954508476260_y.jpg";
+            }
+
+            // Анимация
             numElement.classList.add("jump");
             numElement.addEventListener("animationend", function() {
                 numElement.classList.remove("jump");
@@ -103,8 +128,8 @@
 
             if (currentValue >= speedUpgradeCost) {
                 numElement.textContent = currentValue - speedUpgradeCost;
-                updateInterval = Math.max(200, updateInterval * 0.8); // Уменьшаем интервал, минимально до 200 мс
-                startScoreUpdate(); // Перезапускаем с новым интервалом
+                updateInterval = Math.max(200, updateInterval * 0.8);
+                startScoreUpdate();
             } else {
                 alert("Дай бомжу рыбу и он будит сыт 1 день, дай бомжу удочку и он её пропьёт");
             }
@@ -129,32 +154,10 @@
         }
     </script>
 
-<script>
-    document.getElementById("tap").addEventListener("click", function() {
-        let numElement = document.getElementById("numP");
-        let currentValue = parseInt(numElement.textContent);
-        currentValue += upgradeMultiplier; // Увеличиваем значение
-        numElement.textContent = currentValue;
-
-        // Перевірка, чи currentValue знаходиться між 1000 і 1010 для зміни зображення
-        const tapImage = document.getElementById("tap");
-        if (currentValue >= 1000 && currentValue < 1010) {
-            tapImage.src = "./WDa.jpg"; // Замініть на шлях до вашого нового зображення
-        } else {
-            tapImage.src = "./photo_5255942954508476260_y.jpg"; // Оригінальне зображення
-        }
-
-        // Ефект анімації
-        numElement.classList.add("jump");
-        numElement.addEventListener("animationend", function() {
-            numElement.classList.remove("jump");
-        }, { once: true });
-    });
-</script>
-
-
     <footer>
         <p onclick="location.href='https://tonaza.github.io/Naza_Hub/'">Автор - @fikys_is (Клац, и ты в моей берлоге)</p>
     </footer>
 </body>
 </html>
+
+ 
